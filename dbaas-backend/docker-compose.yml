@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: api-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker socket access for managing containers
+    environment:
+      - NODE_ENV=production
+    restart: always
+    networks:
+      - dbaas-network 
+      
+  nginx:
+    image: nginx:latest
+    container_name: nginx-dbaas
+    ports:
+      - "8080:80"  # Maps port 80 in the container to port 8080 on the host
+    volumes:
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf  # Mount your custom Nginx configuration
+    networks:
+      - dbaas-network  # Custom Docker network
+
+networks:
+  dbaas-network:
+    driver: bridge
