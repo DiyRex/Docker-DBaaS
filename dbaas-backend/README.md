@@ -1,3 +1,5 @@
+Need to fix: Nginx routing for mysql services (resolve hostnames)
+
 ## Documentation: MySQL and Adminer Container Management with Data Persistence
 
 ### Overview
